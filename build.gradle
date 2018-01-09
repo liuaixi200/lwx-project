@@ -1,0 +1,35 @@
+
+
+subprojects {
+
+    apply plugin: 'java'
+
+    repositories {
+        mavenLocal()
+        maven{
+            url "http://maven.aliyun.com/nexus/content/groups/public"
+        }
+    }
+
+    dependencies{
+        compile 'org.apache.poi:poi-ooxml:3.8'
+        compile 'ch.qos.logback:logback-core:1.1.7'
+        compile 'ch.qos.logback:logback-classic:1.1.7'
+        testCompile 'junit:junit:4.10'
+    }
+
+    task mkdirs() << {
+        sourceSets*.java.srcDirs*.each { it.mkdirs() }
+        sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+    }
+}
+
+project(':core'){
+
+}
+
+project(":app"){
+    dependencies{
+        compile project(":core")
+    }
+}
